@@ -1,9 +1,15 @@
+const  {createServer} = require('http') ;
 const { Server } = require('socket.io');
-const io = new Server();
+
+const httpServer = createServer();
+const io = new Server(httpServer, {
+    cors: {
+        origin: "https://saucedontsauce.github.io/XOjs/"
+    }
+});
 
 const userList = {}
 
-io.origins('*:*')
 
 io.on('connection', (socket) => {
     console.log('someone connected');
