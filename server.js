@@ -30,4 +30,4 @@ io.on('disconnect', (err)=>{
 });
 
 
-io.listen(process.ENV.PORT)
+io.listen(process.env.PORT)
