@@ -1,12 +1,15 @@
-const ws = require('ws');
-const http = require('http');
-const app = express();
+const {Server} = require('socket.io');
+const io = new Server();
 
-const server = http.createServer(app);
-const wss = new ws.Server({server})
-let users = {};
+const userList = {}
 
-ws.on('connection', (sock)=>{
-    console.log(sock)
-    sock.send(sock)
+io.on('connection', (socket)=>{
+    console.log('soneone connected');
+    console.log('person who connected :', socket)
+
+
+    io.emit("list_users", socket)
 })
+
+
+io.listen(3000)
