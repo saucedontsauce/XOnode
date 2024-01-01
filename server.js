@@ -10,7 +10,7 @@ io.on('connection', (socket) => {
     console.log('person who connected :', socket)
 
 
-    io.emit("list_users", socket)
+    io.emit("list_users", "test")
 })
 
 
