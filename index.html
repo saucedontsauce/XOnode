@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TTT/XO</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .center10 {
+            margin: 0 10%;
+        }
+
+        .fleft50 {
+            float: left;
+            width: 50%;
+            overflow-wrap: break-word;
+        }
+        .inline{
+            display: inline;
+        }
+        .w100 {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="center10">
+        <header>
+            Tic-Tac-Toe
+        </header>
+        <section id="serverStats">
+            <h6 class="w100 center">Info</h6>
+            <div class="infoDisp">
+
+                <div class="infoGroup fleft50">Users Connected: <div class="inline" id="userCount">0</div></div>
+                <div class="infoGroup fleft50">Games Live: <div class="inline" id="gameCount">0</div></div>
+            </div>
+        </section>
+        <section>
+            A simple game made in javascript
+        </section>
+
+    </div>
+
+
+
+   
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // socket callers and listeners
+        const socket = io()
+
+        socket.on('x0_Live_Users', (msg)=>{
+            console.log(msg)
+            document.getElementById('userCount').textContent = msg
+        })
+
+    </script>
+
+    
+</body>
+
+</html>
