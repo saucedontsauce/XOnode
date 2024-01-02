@@ -40,7 +40,9 @@ io.on("connection", (socket) => {
 
   socket.on('x1_Live_Users', ()=>{
     console.log('player count requested from',socket.id);
-    io.emit('x0_Live_Users, ', liveUsers.length);
+    let idArr = Object.keys(liveUsers);
+    let userCount = idArr.length;
+    io.emit('x0_Live_Users, ', userCount);
 })
 
 });
