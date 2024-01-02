@@ -1,33 +1,34 @@
-const  {createServer} = require('http') ;
-const { Server } = require('socket.io');
+const express = require("express");
+const { createServer } = require("http");
+const { Server } = require("socket.io");
 
-const httpServer = createServer();
+let app = express();
+const port = 3000;
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
+app.get("/", (req, res) => {
+  res.status(200).send({
+    success: true,
+    message: "welcome to the beginning of greatness",
+  });
+});
+
+const httpServer = createServer(app);
+
 const io = new Server(httpServer, {
-    cors: {
-        origin: "*:*"
-    }
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
 });
 
-const userList = {}
-
-
-io.on('connection', (socket) => {
-    console.log('someone connected');
-    console.log('person who connected :', socket.id)
-
-
-    io.emit("list_users", "test")
-})
-
-io.on('connect_error', (err)=>{
-    console.log(err);
-});
-io.on('connect_failed', (err)=>{
-    console.log(err);
-});
-io.on('disconnect', (err)=>{
-    console.log(err);
+io.on("connection", (socket) => {
+  console.log("We are live and connected");
+  console.log(socket.id);
 });
 
-
-io.listen(process.env.PORT)
+httpServer.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
