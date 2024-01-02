@@ -7,6 +7,7 @@ const port = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+let liveUsers = {};
 
 app.get("/", (req, res) => {
   res.status(200).send({
@@ -27,7 +28,14 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
   console.log("We are live and connected");
   console.log(socket.id);
+
 });
+
+io.on('x1_Live_Users', (socket)=>{
+    console.log('player count requested from',socket.id);
+    io.emit('x0_Live_Users', liveUsers);
+})
+
 
 httpServer.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
