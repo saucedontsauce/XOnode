@@ -5,11 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TTT/XO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
             padding: 0;
             margin: 0;
+            font-family: 'Ubuntu';
         }
 
         body,
@@ -22,6 +26,12 @@
             text-align: center;
         }
 
+        .centerflex {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .center10 {
             margin: 0 10%;
         }
@@ -31,51 +41,153 @@
             width: 50%;
             overflow-wrap: break-word;
         }
-        .inline{
+
+        .inline {
             display: inline;
         }
+
         .w100 {
             width: 100%;
+        }
+
+        .gameView {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative
+        }
+
+        .infoDisp {
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+        }
+
+        .infoGroup {
+            padding: 4px;
+        }
+
+        .numDisp {
+            padding-left: 4px;
+        }
+
+        #serverStats {
+            height: 30px;
+        }
+
+        .gameTitle {
+            width: 100%;
+            height: 30dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gameMenu {
+            height: calc(70dvh - 30px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .menuBtn {
+            cursor: pointer;
+            padding: .75rem 1.5rem;
+        }
+
+        .menuBtn:hover {
+            background-color: #E3E3E3;
+        }
+
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 
-<body>
+<body onload="showScreen('mainMenu')">
 
-    <div class="center10">
-        <header>
-            Tic-Tac-Toe
-        </header>
+
+
+
+
+
+    <div class="gameView hidden" id="mainMenu">
+        <!-- main menu -->
         <section id="serverStats">
-            <h6 class="w100 center">Info</h6>
             <div class="infoDisp">
 
-                <div class="infoGroup fleft50">Users Connected: <div class="inline" id="userCount">0</div></div>
-                <div class="infoGroup fleft50">Games Live: <div class="inline" id="gameCount">0</div></div>
+                <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline" id="userCount">0</div>
+                </div>
+                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline" id="gameCount">0</div>
+                </div>
             </div>
         </section>
-        <section>
-            A simple game made in javascript
+
+        <section class="gameTitle">
+            <h3>Tic-Tac-Toe</h3>
         </section>
 
+        <section class="gameMenu">
+            <div class="menuBtn">Start</div>
+            <div class="menuBtn">Options</div>
+        </section>
     </div>
 
 
 
-   
+    <div class="gameView hidden" id="optionsMenu">
+
+
+
+    </div>
+
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
         // socket callers and listeners
         const socket = io()
 
-        socket.on('x0_Live_Users', (msg)=>{
-            console.log(msg)
-            document.getElementById('userCount').textContent = msg
+        let userCount = 0;
+
+        socket.on('x0_Live_Users', (msg) => {
+            console.log(msg);
+            userCount = msg
+            document.getElementById('userCount').textContent = msg;
         })
 
     </script>
+    <script>
+        // screenManagement
 
-    
+        const showScreen = (targId) => {
+            let allScreens = document.getElementsByClassName('gameView');
+            let targeted = document.getElementById(targId);
+            for (let i = 0; i < allScreens.length; i++) {
+                let thisOne = allScreens[i];
+                let test = thisOne.classList.contains('hidden');
+                if (!test) {
+                    thisOne.classList.toggle('hidden');
+                } else {
+
+                };
+            };
+            targeted.classList.toggle('hidden');
+            document.getElementById('userCount').textContent = userCount;
+        }
+
+
+
+    </script>
+
+
+    <script>
+        //dev testing
+    </script>
+
 </body>
 
 </html>
