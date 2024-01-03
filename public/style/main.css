@@ -1,0 +1,96 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'Ubuntu';
+}
+
+body,
+html {
+    width: 100%;
+    height: 100%
+}
+
+.center {
+    text-align: center;
+}
+
+.centerflex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center10 {
+    margin: 0 10%;
+}
+
+.fleft50 {
+    float: left;
+    width: 50%;
+    overflow-wrap: break-word;
+}
+
+.inline {
+    display: inline;
+}
+
+.w100 {
+    width: 100%;
+}
+
+.gameView {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative
+}
+
+.infoDisp {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.infoGroup {
+    padding: 4px;
+}
+
+.numDisp {
+    padding-left: 4px;
+}
+
+#serverStats {
+    height: 30px;
+}
+
+.gameTitle {
+    width: 100%;
+    height: 30dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gameMenu {
+    height: calc(70dvh - 30px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.menuBtn {
+    cursor: pointer;
+    padding: .75rem 1.5rem;
+}
+
+.menuBtn:hover {
+    background-color: #E3E3E3;
+}
+
+.hidden {
+    display: none;
+}

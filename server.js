@@ -10,10 +10,11 @@ app.use(express.urlencoded({ extended: true }));
 
 let liveUsers = {};
 
+app.use('/public', express.static(path.join(__dirname,'/public')))
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, '/index.html'));
-  });
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, '/index.html'));
+});
 
 
 app.get("/api", (req, res) => {
@@ -40,26 +41,29 @@ io.on("connection", (socket) => {
     level: 0
   };
   let idArr = Object.keys(liveUsers);
-let userCount = idArr.length;
-console.log(userCount)
+  let userCount = idArr.length;
+  console.log(userCount);
   io.emit('x0_Live_Users', userCount);
 
 
-  socket.on('disconnect', ()=>{
+  socket.on('disconnect', () => {
     console.log('user disconnected', socket.id);
-    delete liveUsers[socket.id]
+    delete liveUsers[socket.id];
+    let idArr = Object.keys(liveUsers);
+    let userCount = idArr.length;
+    io.emit('x0_Live_Users', userCount);
   })
 
-  socket.on('req_count', ()=>{
+  socket.on('req_count', () => {
     let idArr = Object.keys(liveUsers);
-let userCount = idArr.length;
-    console.log('player count requested from',socket.id);
+    let userCount = idArr.length;
+    console.log('player count requested from', socket.id);
     io.emit('x0_Live_Users', userCount);
-})
+  })
 
-    socket.on("req_searching", ()=>{
-        console.log('searching list requested')
-    })
+  socket.on("req_searching", () => {
+    console.log('searching list requested')
+  })
 
 });
 
