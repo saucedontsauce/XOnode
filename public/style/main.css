@@ -94,3 +94,9 @@ html {
 .hidden {
     display: none;
 }
+
+
+.backbtn {
+    cursor: pointer;
+    padding: 8px 14px
+}
