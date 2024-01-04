@@ -11,19 +11,21 @@
     <link rel="stylesheet" type="text/css" href="/public/style/main.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="/public/scripts/socketEvents.js" type="text/javascript"></script>
-
+    <script src="/public/scripts/settingsSave.js" type="text/javascript"></script>
     <script src="/public/scripts/screenManager.js" type="text/javascript"></script>
 </head>
 
 <body onload="showScreen('mainMenu')">
 
-
+    <!-- main menu -->
+    <!--              -->
     <div class="gameView" id="mainMenu">
-        <!-- main menu -->
+
         <section id="serverStats">
             <div class="infoDisp">
 
-                <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">0</div>
+                <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
+                        0</div>
                 </div>
                 <div class="infoGroup centerflex">Games Live: <div class="numDisp inline" id="gameCount">0</div>
                 </div>
@@ -36,19 +38,21 @@
 
         <section class="gameMenu">
             <div class="menuBtn" onclick="showScreen('searchMenu')">Start</div>
-            <div class="menuBtn" onclick="showScreen('optionsMenu')" >Options</div>
+            <div class="menuBtn" onclick="showScreen('optionsMenu')">Options</div>
         </section>
     </div>
 
 
-
+    <!-- options menu -->
+    <!--              -->
     <div class="gameView" id="optionsMenu">
-        <!-- options menu -->
+
 
         <section id="serverStats">
             <div class="infoDisp">
 
-                <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">0</div>
+                <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
+                        0</div>
                 </div>
                 <div class="infoGroup centerflex">Games Live: <div class="numDisp inline" id="gameCount">0</div>
                 </div>
@@ -62,14 +66,14 @@
         <div class="optionsDisplay">
             <div class="optionrow">
                 <label for="username">Username:</label>
-                <input type="text" name="username" id="username">
+                <input type="text" name="username" id="usernameChange">
             </div>
 
 
             <div class="optionrow">
-                <input type="button" value="Okay">
+                <input type="button" value="Okay" onclick="handleSettingsSave()">
             </div>
-            
+
         </div>
     </div>
 

@@ -100,3 +100,10 @@ html {
     cursor: pointer;
     padding: 8px 14px
 }
+
+.optionsDisplay{
+    height: calc(100dvh - 82px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
