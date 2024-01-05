@@ -11,9 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/public/style/main.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="/public/scripts/socketEvents.js" type="text/javascript"></script>
-    <script src="/public/scripts/usrMan.js" ></script>
     <script src="/public/scripts/settingsSave.js" type="text/javascript"></script>
-    <script src="/public/scripts/screenManager.js" type="text/javascript"></script>
 </head>
 
 <body onload="showScreen('mainMenu')">
@@ -28,7 +26,7 @@
                 <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
                         0</div>
                 </div>
-                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline" id="gameCount">0</div>
+                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0</div>
                 </div>
             </div>
         </section>
@@ -55,7 +53,7 @@
                 <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
                         0</div>
                 </div>
-                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline" id="gameCount">0</div>
+                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0</div>
                 </div>
             </div>
         </section>
@@ -89,7 +87,7 @@
                 <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
                         0</div>
                 </div>
-                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline" id="gameCount">0</div>
+                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0</div>
                 </div>
             </div>
             <div class="searchDisplay">
@@ -108,7 +106,46 @@
 
     </div>
 
+    <!-- game screen -->
+    <div class="gameView" id="gamePlay">
+        <section id="serverStats">
+            <div class="infoDisp">
 
+                <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount"
+                        id="userCount">
+                        0</div>
+                </div>
+                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0</div>
+                </div>
+            </div>
+        </section>
+        <section class="gamePlayView">
+            <div class="whoami">X</div>
+
+            <div class="gamegrid" id="gameGrid" onclick="handlePlayClick">
+                <div class="gameRow" id="0">
+                    <div class="gameCell" id="00"></div>
+                    <div class="gameCell" id="01"></div>
+                    <div class="gameCell" id="02"></div>
+                </div>
+                <div class="gameRow" id="1">
+                    <div class="gameCell" id="10"></div>
+                    <div class="gameCell" id="11"></div>
+                    <div class="gameCell" id="12"></div>
+                </div>
+                <div class="gameRow" id="2">
+                    <div class="gameCell" id="20"></div>
+                    <div class="gameCell" id="21"></div>
+                    <div class="gameCell" id="22"></div>
+                </div>
+            </div>
+            <div class="winnerbanner hidden" id="winnerBanner">
+                <p>Winner:</p>
+                <div id="winnerDisp"></div>
+            </div>
+        </section>
+
+    </div>
 
 
 </body>
