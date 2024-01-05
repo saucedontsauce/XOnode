@@ -9,6 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 let liveUsers = {};
+let liveGames = {};
 
 app.use('/public', express.static(path.join(__dirname,'/public')))
 
@@ -61,8 +62,13 @@ io.on("connection", (socket) => {
     io.emit('x0_Live_Users', userCount);
   })
 
-  socket.on("req_searching", () => {
-    console.log('searching list requested')
+  socket.on('req_games', ()=>{
+
+  })
+
+  socket.on("req_searching", (msg) => {
+    console.log(msg.username, "wants to search ...");
+    console.log(msg)
   })
 
 });

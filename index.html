@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/public/style/main.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="/public/scripts/socketEvents.js" type="text/javascript"></script>
+    <script src="/public/scripts/usrMan.js" ></script>
     <script src="/public/scripts/settingsSave.js" type="text/javascript"></script>
     <script src="/public/scripts/screenManager.js" type="text/javascript"></script>
 </head>
@@ -37,7 +38,7 @@
         </section>
 
         <section class="gameMenu">
-            <div class="menuBtn" onclick="showScreen('searchMenu')">Start</div>
+            <div class="menuBtn" onclick="showScreen('searchMenu', startSearch)">Start</div>
             <div class="menuBtn" onclick="showScreen('optionsMenu')">Options</div>
         </section>
     </div>
@@ -60,10 +61,12 @@
         </section>
 
         <section id="backBtnWrap">
-            <div onclick="showScreen('mainMenu')" class="backbtn">Home</div>
+            <div onclick="showScreen('mainMenu')" class="backbtn">Back</div>
         </section>
         <h4>Options</h4>
         <div class="optionsDisplay">
+            <p class="center">Settings saved here will be stored in locaLstorage, meaning you dont have to come back here to change
+                things everytime you load the page.</p>
             <div class="optionrow">
                 <label for="username">Username:</label>
                 <input type="text" name="username" id="usernameChange">
@@ -71,10 +74,38 @@
 
 
             <div class="optionrow">
-                <input type="button" value="Okay" onclick="handleSettingsSave()">
+                <input class="settingSubmitBtn" type="button" value="Okay" onclick="handleSettingsSave()">
             </div>
 
         </div>
+    </div>
+
+
+    <!-- search menu -->
+    <div class="gameView" id="searchMenu">
+        <section id="serverStats">
+            <div class="infoDisp">
+
+                <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
+                        0</div>
+                </div>
+                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline" id="gameCount">0</div>
+                </div>
+            </div>
+            <div class="searchDisplay">
+                <section id="backBtnWrap">
+                    <div onclick="showScreen('mainMenu')" class="backbtn">Back</div>
+                </section>
+                <div class="searchSpinn">
+                    
+                    <img src="/public/images/Rhombus.gif" alt="Loading...">
+
+
+                </div>
+            </div>
+        </section>
+
+
     </div>
 
 

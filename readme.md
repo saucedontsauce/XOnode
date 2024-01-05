@@ -21,3 +21,9 @@ obvious
 fix options css for options
 write out some docs for the functions that have been written into their own files.
 
+
+#### multiplayer how the fuck 
+add server socket listener to create games
+add server socket listener to get games
+add server socket listener to join games
+

@@ -64,6 +64,7 @@ html {
 
 #serverStats {
     height: 30px;
+    border-bottom: 1px solid grey
 }
 
 .gameTitle {
@@ -98,7 +99,10 @@ html {
 
 .backbtn {
     cursor: pointer;
-    padding: 8px 14px
+    padding: 8px 14px;
+    position: fixed;
+    top: 2px;
+    left: 2px
 }
 
 .optionsDisplay{
@@ -106,4 +110,16 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    align-items: center;
+}
+
+.settingSubmitBtn {
+width: 30dvw;
+}
+
+.searchSpinn {
+    height: calc(100dvh - 30px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

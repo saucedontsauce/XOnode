@@ -1,5 +1,5 @@
 // screenManagement
-const showScreen = (targId) => {
+const showScreen = (targId, reqfunc) => {
     let allScreens = document.getElementsByClassName('gameView');
     let targeted = document.getElementById(targId);
     for (let i = 0; i < allScreens.length; i++) {
@@ -12,4 +12,7 @@ const showScreen = (targId) => {
         };
     };
     targeted.classList.toggle('hidden');
+    if(reqfunc){
+        reqfunc()
+    }
 };
