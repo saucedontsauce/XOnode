@@ -19,7 +19,7 @@ const showScreen = (targId, reqfunc) => {
         };
     };
     targeted.classList.toggle('hidden');
-    if(reqfunc){
+    if (reqfunc) {
         reqfunc()
     }
 };
@@ -39,7 +39,7 @@ class gameUser {
     }
     runChecks() {
         let storedUsername = localStorage.getItem('username');
-        if(storedUsername){
+        if (storedUsername) {
             console.log('username previously used:', storedUsername);
             this.username = storedUsername;
         }
@@ -69,11 +69,33 @@ socket.on('x0_Live_Games', (msg) => {
         displaylist[i].textContent = msg;
     };
 })
-socket.on("x0_Game_Redirect", (msg)=>{
-    console.log(msg)
-    showScreen(`${msg}`)
+// redirect to the game screen, resize the grid and then join the group
+socket.on("x0_Game_Redirect", (msg) => {
+    let redirConits = msg
+    showScreen(`${redirConits.to}`)
     resizegrid()
+    socket.emit('moveRooms', redirConits.room)
+});
+
+
+// game is live, receive and use game data
+socket.on('x0_Game_Live', (msg) => {
+    console.log('game info received');
+    if (msg.xPlayerID = socket.id) {
+        document.getElementById('whoAmI').textContent = 'X'
+    };
+    if (msg.oPlayerID = socket.id) {
+        document.getElementById('whoAmI').textContent = 'O';
+    };
+
+});
+
+
+// opponent disconnected
+socket.on('x0_Game_Left', (msg)=>{
+    console.log(msg)
 })
+
 
 const startSearch = () => {
     let thisUsrName = localStorage.getItem('username');
@@ -107,7 +129,7 @@ const playerWins = (winner) => {
     document.getElementById('winnerBanner').style.display = 'flex';
 }
 
-const moveMade = ({coord, symb}) => {
+const moveMade = ({ coord, symb }) => {
     let targ = document.getElementById(coord);
     targ.innerHTML = symb;
 }
