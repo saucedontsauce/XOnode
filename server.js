@@ -4,23 +4,6 @@ const { Server } = require("socket.io");
 const path = require('path');
 
 
-class Game {
-  constructor(p1, p2) {
-    this.xPlayerID = p1.id;
-    this.oPlayerID = p2.id;
-    this.xPlayerName = p1.username;
-    this.oPlayerName = p2.username;
-    this.gameField = [
-      ["", "", ""],
-      ["", "", ""],
-      ["", "", ""]
-    ]
-  };
-
-  makeMove() {
-
-  }
-}
 
 
 let app = express();
@@ -55,6 +38,43 @@ const io = new Server(httpServer, {
   },
 });
 
+
+
+class Game {
+  constructor(p1, p2, room) {
+    this.gameRoom = room;
+    this.xPlayerID = undefined;
+    this.oPlayerID = undefined;
+    this.xPlayerName = undefined;
+    this.oPlayerName = undefined;
+    this.gameField = [
+      ["", "", ""],
+      ["", "", ""],
+      ["", "", ""]
+    ];
+    this.init(p1, p2)
+  }
+  init = (p1, p2) => {
+    // generate random numbers and then assign a symbol based on the bigger one
+    let p1rgn = Math.floor(Math.random() * 100);
+    let p2rng = Math.floor(Math.random() * 100);
+    if (p1rgn >= p2rng) {
+      this.oPlayerID = p1.id;
+      this.xPlayerID = p2.id;
+      this.oPlayerName = p1.username;
+      this.xPlayerName = p2.username;
+    } else {
+      this.xPlayerID = p1.id;
+      this.oPlayerID = p2.id;
+      this.xPlayerName = p1.username;
+      this.oPlayerName = p2.username;
+    };
+    // use rng to choose who plays first
+  }
+};
+
+
+
 io.on("connection", (socket) => {
   // create a new property for this connection in the liveUsers object
   liveUsers[socket.id] = { ...socket };
@@ -66,8 +86,11 @@ io.on("connection", (socket) => {
 
   // when user diconnects or closes client
   socket.on('disconnect', () => {
-    console.log('user disconnected', socket.id);
-    console.log(socket.rooms)
+
+  });
+
+  socket.on('disconnecting', () => {
+    console.log('user disconnecing', socket.id);
     // delete this person from searchingUsers 
     delete searchingUsers[socket.id]
     // delete this connection from liveUsers 
@@ -77,19 +100,19 @@ io.on("connection", (socket) => {
     let userCount = idArr.length;
     io.emit('x0_Live_Users', userCount);
     // remove from all rooms and then make a call to those rooms to tell them someone left
-  });
-
-  socket.on('disconnecting', ()=>{
     console.log('user disconnecting')
-    var rooms = [... socket.rooms];
-    console.log(socket.id,'rooms = ',rooms)
-   for(let i=0; i<rooms.length;i++){
-    console.log(rooms[i])
-    if(rooms[i]!=socket.id){
-      console.log(rooms[i])
-      socket.to(rooms[i]).emit('x0_Game_Left', "User Left The game")
-    }
-   }
+    let rooms = [...socket.rooms];
+    console.log(socket.id, 'rooms = ', rooms)
+    for (let i = 0; i < rooms.length; i++) {
+      if (rooms[i] != socket.id) {
+        socket.to(rooms[i]).emit('x0_Game_Left', "User Left The game");
+        delete liveGames[rooms[i]];
+        console.log('game ended due to disconnection');
+        let gamearr = Object.keys(liveGames);
+        gameCount = gamearr.length;
+        io.emit('x0_Live_Games', gameCount);
+      }
+    };
   });
 
   // user is requesting the number of live users
@@ -122,65 +145,64 @@ io.on("connection", (socket) => {
         delete searchingUsers[i];
         delete searchingUsers[socket.id];
         //generate game name from both ids
-        let roomName = i+""+socket.id;
+        let roomName = i + "" + socket.id;
         // create redirection object to let client know where to redirect and what room to go to
         let redirObj = {
           'to': 'gamePlay',
           'room': roomName
-        }
+        };
+        // make new game object
+        let p1 = i;
+        let p2 = socket.id;
+        let gameName = p1 + p2;
+        let thisgame = new Game(p1, p2, gameName);
+        liveGames[gameName] = { ...thisgame };
+        let gameArr = Object.keys(liveGames);
+        gameCount = gameArr.length;
+        io.emit('x0_Live_Games', gameCount)
+
         // send to both ids
         io.to(i).emit('x0_Game_Redirect', redirObj);
         io.to(socket.id).emit('x0_Game_Redirect', redirObj);
+
+
+        // emit game initial state
+        console.log('emit,',liveGames[gameName])
+        io.to(gameName).emit('x0_Game_Init', liveGames[gameName]);
+
+
       }
     }
   });
 
-  // user wants to move rooms
-  socket.on('moveRooms', (msg)=>{
-    console.log('room, move requested',msg)
-    // add a new room to socket for acces to game stream
-    socket.join(msg)
-  })
+  socket.on('gameState', (msg) => {
+    console.log(msg)
+  });
 
-  socket.on('gamePlay', (msg)=>{
-    
+
+
+
+  // user wants to move rooms
+  socket.on('moveRooms', (msg) => {
+    socket.join(msg)
+  });
+
+  socket.on('leaveRooms', ()=>{
+    var rooms = [...socket.rooms];
+    for(let i=0; i<rooms.length;i++){
+      if(rooms[i] != socket.id){
+        socket.leave(rooms[i]);
+      }
+    }
+    io.to(socket.id).emit('x0_Game_Redirect', {'to':'userLeftPage'})
   })
 
 });
 
 
-// weird functions / classes
 
 
 
-
-
-
-const manageGame = (p1, p2) => {
-  console.log('game started');
-
-  let gameName = p1 + p2;
-  let thisgame = new Game(p1, p2);
-  liveGames[gameName] = { ...thisgame };
-  // update games live
-  let gameArr = Object.keys(liveGames);
-  let gameCount = gameArr.length;
-  io.emit("x0_Live_Games", gameCount);
-  //emit initial game state
-  io.to(p1.id).emit('x0_Game_Live', thisgame);
-  io.to(p2.id).emit('x0_Game_Live', thisgame);
-
-  io.on("game_move", (move) => {
-
-  })
-
-
-
-
-
-
-
-}
 
 
 

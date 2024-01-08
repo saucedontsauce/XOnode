@@ -19,11 +19,14 @@ screen change function works as expected
  ### needs fixing/doing
 obvious
 fix options css for options
-write out some docs for the functions that have been written into their own files.
+write out some docs / notes  for stuffs. // started on 
 
 
-#### multiplayer how the fuck 
-add server socket listener to create games
-add server socket listener to get games
-add server socket listener to join games
+#### multiplayer how the fuck ?
+
+coffee and alcohol thats how!
+
+
+
+have server tell client what to call next
 

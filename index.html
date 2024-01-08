@@ -26,7 +26,8 @@
                 <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
                         0</div>
                 </div>
-                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0</div>
+                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0
+                    </div>
                 </div>
             </div>
         </section>
@@ -53,7 +54,8 @@
                 <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
                         0</div>
                 </div>
-                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0</div>
+                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0
+                    </div>
                 </div>
             </div>
         </section>
@@ -63,7 +65,8 @@
         </section>
         <h4>Options</h4>
         <div class="optionsDisplay">
-            <p class="center">Settings saved here will be stored in locaLstorage, meaning you dont have to come back here to change
+            <p class="center">Settings saved here will be stored in locaLstorage, meaning you dont have to come back
+                here to change
                 things everytime you load the page.</p>
             <div class="optionrow">
                 <label for="username">Username:</label>
@@ -87,7 +90,8 @@
                 <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
                         0</div>
                 </div>
-                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0</div>
+                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0
+                    </div>
                 </div>
             </div>
             <div class="searchDisplay">
@@ -95,7 +99,7 @@
                     <div onclick="showScreen('mainMenu')" class="backbtn">Back</div>
                 </section>
                 <div class="searchSpinn">
-                    
+
                     <img src="/public/images/Rhombus.gif" alt="Loading...">
 
 
@@ -111,16 +115,16 @@
         <section id="serverStats">
             <div class="infoDisp">
 
-                <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount"
-                        id="userCount">
+                <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
                         0</div>
                 </div>
-                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0</div>
+                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0
+                    </div>
                 </div>
             </div>
         </section>
         <section class="gamePlayView">
-            <div class="whoami" id="whoAmI">X</div>
+            <div class="whoami" id="whoAmI">Error</div>
 
             <div class="gamegrid" id="gameGrid" onclick="handlePlayClick">
                 <div class="gameRow" id="0">
@@ -145,6 +149,43 @@
             </div>
         </section>
 
+    </div>
+
+    <div class="gameView" id="userLeftPage">
+        <section id="serverStats">
+            <div class="infoDisp">
+
+                <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
+                        0</div>
+                </div>
+                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="userLeftWrapper">
+            <div class="userLeftBanner">Your opponent left the game</div>
+            <div id="homeButton" onclick="showScreen('mainMenu')">
+                Home
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="gameView" id="winnerPage">
+        <div class="winnerPageView">
+            <div class="winnerSymb" id="winnerSymbol">
+                Error
+            </div>
+            <div class="winnerName" id="winnerUsername">
+                Error
+            </div>
+            <div class="homeButton" onclick="showScreen('mainMenu')">
+                Home
+            </div>
+        </div>
     </div>
 
 

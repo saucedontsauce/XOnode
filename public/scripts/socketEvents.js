@@ -22,6 +22,12 @@ const showScreen = (targId, reqfunc) => {
     if (reqfunc) {
         reqfunc()
     }
+
+
+
+
+
+
 };
 
 
@@ -63,37 +69,42 @@ socket.on('x0_Live_Users', (msg) => {
 socket.on('x0_Live_Games', (msg) => {
     console.log("live games", msg)
     let displaylist = document.getElementsByClassName('gameCount');
-    console.log(displaylist)
     for (let i = 0; i < displaylist.length; i++) {
-        console.log(displaylist[i])
         displaylist[i].textContent = msg;
     };
-})
+});
+
 // redirect to the game screen, resize the grid and then join the group
 socket.on("x0_Game_Redirect", (msg) => {
     let redirConits = msg
     showScreen(`${redirConits.to}`)
     resizegrid()
-    socket.emit('moveRooms', redirConits.room)
+    if(redirConits.room){
+        socket.emit('moveRooms', redirConits.room)
+    }
 });
 
 
 // game is live, receive and use game data
-socket.on('x0_Game_Live', (msg) => {
-    console.log('game info received');
-    if (msg.xPlayerID = socket.id) {
+socket.on('x0_Game_Init', (msg) => {
+    console.log('game init received');
+    if (msg.xPlayerID == socket.id) {
         document.getElementById('whoAmI').textContent = 'X'
     };
-    if (msg.oPlayerID = socket.id) {
+    if (msg.oPlayerID == socket.id) {
         document.getElementById('whoAmI').textContent = 'O';
     };
+    console.log('game symbol has been set')
 
 });
 
 
+
+
 // opponent disconnected
 socket.on('x0_Game_Left', (msg)=>{
-    console.log(msg)
+    console.log('opponent left the game');
+    socket.emit('leaveRooms', 'plz')
 })
 
 
@@ -137,6 +148,8 @@ const moveMade = ({ coord, symb }) => {
 
 window.onload = resizegrid;
 window.onresize = resizegrid;
+
+
 const handlePlayClick = (e) => {
     moveMade(e.target.id, "X")
 
