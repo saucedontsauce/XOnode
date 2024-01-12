@@ -124,11 +124,6 @@ const resizegrid = () => {
     }
 };
 
-const playerWins = (winner) => {
-    document.getElementById('winnerDisp').textContent = winner;
-    document.getElementById('winnerBanner').style.display = 'flex';
-};
-
 const moveMade = (coord, symb) => {
     let targ = document.getElementById(coord);
     targ.textContent = symb;
@@ -145,6 +140,15 @@ socket.on('x0_Game_Move', (msg) => {
     };
 });
 
+// game winner
+
+socket.on('x0_Game_Won', (msg)=>{
+    console.log('winner');
+    showScreen('winnerPage',()=>{
+        document.getElementById('winnerSymbol').textContent = msg.sym;
+        document.getElementById('winnerName').textContent = msg.username;
+    });
+});
 
 
 // event handlers
