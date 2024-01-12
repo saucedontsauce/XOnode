@@ -149,7 +149,7 @@ socket.on('x0_Game_Won', (msg) => {
         document.getElementById('winnerName').textContent = msg.username;
     });
     socket.emit('silentLeave', thisGame.gameRoom);
-    thisGame = undefined;
+    thisGame = null;
 });
 
 

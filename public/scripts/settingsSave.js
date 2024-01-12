@@ -4,6 +4,7 @@ const handleSettingsSave = () => {
     let newusername = document.getElementById('usernameChange').value;
     localStorage.setItem('username', newusername);
     console.log(newusername);
+    window.alert("settings saved");
 }
 
 
