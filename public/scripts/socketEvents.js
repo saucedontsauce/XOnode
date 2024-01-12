@@ -1,9 +1,11 @@
+
 // variables
 const socket = io()
 
 let userCount = 0;
 let gameCount = 0;
 let thisGame;
+let thisSymbol;
 
 // screenManagement
 const showScreen = (targId, reqfunc) => {
@@ -13,21 +15,15 @@ const showScreen = (targId, reqfunc) => {
         let thisOne = allScreens[i];
         let test = thisOne.classList.contains('hidden');
         if (!test) {
-            thisOne.classList.toggle('hidden');
+            thisOne.classList.add('hidden');
         } else {
 
         };
     };
-    targeted.classList.toggle('hidden');
+    targeted.classList.remove('hidden');
     if (reqfunc) {
         reqfunc()
-    }
-
-
-
-
-
-
+    };
 };
 
 
@@ -79,44 +75,37 @@ socket.on("x0_Game_Redirect", (msg) => {
     let redirConits = msg
     showScreen(`${redirConits.to}`)
     resizegrid()
-    if(redirConits.room){
-        socket.emit('moveRooms', redirConits.room)
+    console.log(msg)
+
+    thisGame = msg.game;
+    if (redirConits.game) {
+        if (redirConits.game.xPlayerID == socket.id) {
+            thisSymbol = 'X'
+            document.getElementById('whoAmI').textContent = thisSymbol;
+            console.log('game symbol has been set')
+        } else {
+            thisSymbol = 'O';
+            document.getElementById('whoAmI').textContent = thisSymbol;
+            console.log('game symbol has been set')
+        }
+    };
+    if (redirConits.room) {
+        socket.emit('moveRooms', redirConits.room);
     }
 });
-
-
-// game is live, receive and use game data
-socket.on('x0_Game_Init', (msg) => {
-    console.log('game init received');
-    if (msg.xPlayerID == socket.id) {
-        document.getElementById('whoAmI').textContent = 'X'
-    };
-    if (msg.oPlayerID == socket.id) {
-        document.getElementById('whoAmI').textContent = 'O';
-    };
-    console.log('game symbol has been set')
-
-});
-
-
-
-
-// opponent disconnected
-socket.on('x0_Game_Left', (msg)=>{
+// listener for when opponent disconnected
+socket.on('x0_Game_Left', (msg) => {
     console.log('opponent left the game');
-    socket.emit('leaveRooms', 'plz')
+    socket.emit('leaveRooms', 'plz');
 })
-
-
+// function to request starting searching 
 const startSearch = () => {
     let thisUsrName = localStorage.getItem('username');
     socket.emit('req_searching', thisUsr);
     console.log("%s searching", thisUsrName);
 }
 
-
-
-
+// function to resize the gameplay grid
 const resizegrid = () => {
     let grid = document.getElementById('gameGrid');
     let childarr = grid.children;
@@ -133,28 +122,52 @@ const resizegrid = () => {
             thisRow.children[j].style.height = celldim + "px";
         }
     }
-}
+};
 
 const playerWins = (winner) => {
     document.getElementById('winnerDisp').textContent = winner;
     document.getElementById('winnerBanner').style.display = 'flex';
-}
+};
 
-const moveMade = ({ coord, symb }) => {
+const moveMade = (coord, symb) => {
     let targ = document.getElementById(coord);
-    targ.innerHTML = symb;
-}
+    targ.textContent = symb;
+};
+
+// game move made listener
+socket.on('x0_Game_Move', (msg) => {
+    console.log('someone made a move', msg);
+    thisGame = msg.game;
+    if(thisGame.lastTurn.sym == thisGame.oPlayerID){
+        moveMade(thisGame.lastTurn.pos,'O');
+    } else if(thisGame.lastTurn.sym == thisGame.xPlayerID){
+        moveMade(thisGame.lastTurn.pos,'X');
+    };
+});
+
+
+
+// event handlers
+const gameClickHandle = (pos) => {
+    if (thisGame.whosTurn == socket.id) {
+        let coord = pos.split('')
+        thisGame.gameField[coord[1]][coord[0]] = thisSymbol;
+        thisGame.lastTurn.pos = pos
+        if (thisSymbol == 'X') {
+            thisGame.whosTurn = thisGame.oPlayerID;
+            thisGame.lastTurn.sym = thisGame.xPlayerID;
+        } else {
+            thisGame.whosTurn = thisGame.xPlayerID;
+            thisGame.lastTurn.sym = thisGame.oPlayerID;
+        }
+        socket.emit('clientMoveMade', { 'status': 'Live', 'game': thisGame });
+
+    } else {
+        window.alert('Not Your Turn');
+    }
+
+};
 
 
 window.onload = resizegrid;
 window.onresize = resizegrid;
-
-
-const handlePlayClick = (e) => {
-    moveMade(e.target.id, "X")
-
-}
-
-
-
-

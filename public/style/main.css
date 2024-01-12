@@ -164,7 +164,7 @@ html {
     font-size: 50px;
 }
 
-#userLeftPage {
+.userLeftPage {
     height: calc(70dvh - 30px);
     display: flex;
     flex-direction: column;

@@ -126,21 +126,21 @@
         <section class="gamePlayView">
             <div class="whoami" id="whoAmI">Error</div>
 
-            <div class="gamegrid" id="gameGrid" onclick="handlePlayClick">
+            <div class="gamegrid" id="gameGrid">
                 <div class="gameRow" id="0">
-                    <div class="gameCell" id="00"></div>
-                    <div class="gameCell" id="01"></div>
-                    <div class="gameCell" id="02"></div>
+                    <div class="gameCell" id="00" onclick="gameClickHandle('00')"></div>
+                    <div class="gameCell" id="01" onclick="gameClickHandle('01')"></div>
+                    <div class="gameCell" id="02" onclick="gameClickHandle('02')"></div>
                 </div>
                 <div class="gameRow" id="1">
-                    <div class="gameCell" id="10"></div>
-                    <div class="gameCell" id="11"></div>
-                    <div class="gameCell" id="12"></div>
+                    <div class="gameCell" id="10" onclick="gameClickHandle('10')"></div>
+                    <div class="gameCell" id="11" onclick="gameClickHandle('11')"></div>
+                    <div class="gameCell" id="12" onclick="gameClickHandle('12')"></div>
                 </div>
                 <div class="gameRow" id="2">
-                    <div class="gameCell" id="20"></div>
-                    <div class="gameCell" id="21"></div>
-                    <div class="gameCell" id="22"></div>
+                    <div class="gameCell" id="20" onclick="gameClickHandle('20')"></div>
+                    <div class="gameCell" id="21" onclick="gameClickHandle('21')"></div>
+                    <div class="gameCell" id="22" onclick="gameClickHandle('22')"></div>
                 </div>
             </div>
             <div class="winnerbanner hidden" id="winnerBanner">

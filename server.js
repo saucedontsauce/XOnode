@@ -42,34 +42,24 @@ const io = new Server(httpServer, {
 
 class Game {
   constructor(p1, p2, room) {
+    console.log(p1);
+    console.log(p2);
     this.gameRoom = room;
-    this.xPlayerID = undefined;
-    this.oPlayerID = undefined;
-    this.xPlayerName = undefined;
-    this.oPlayerName = undefined;
+    this.xPlayerID = p1.id;
+    this.oPlayerID = p2.id;
+    this.xPlayerName = p1.username;
+    this.oPlayerName = p2.username;
+    this.whosTurn = this.xPlayerID;
+    this.lastTurn = {
+      'pos': undefined,
+      'sym': undefined
+    }
+    this.winner = undefined;
     this.gameField = [
       ["", "", ""],
       ["", "", ""],
       ["", "", ""]
     ];
-    this.init(p1, p2)
-  }
-  init = (p1, p2) => {
-    // generate random numbers and then assign a symbol based on the bigger one
-    let p1rgn = Math.floor(Math.random() * 100);
-    let p2rng = Math.floor(Math.random() * 100);
-    if (p1rgn >= p2rng) {
-      this.oPlayerID = p1.id;
-      this.xPlayerID = p2.id;
-      this.oPlayerName = p1.username;
-      this.xPlayerName = p2.username;
-    } else {
-      this.xPlayerID = p1.id;
-      this.oPlayerID = p2.id;
-      this.xPlayerName = p1.username;
-      this.oPlayerName = p2.username;
-    };
-    // use rng to choose who plays first
   }
 };
 
@@ -146,17 +136,20 @@ io.on("connection", (socket) => {
         delete searchingUsers[socket.id];
         //generate game name from both ids
         let roomName = i + "" + socket.id;
-        // create redirection object to let client know where to redirect and what room to go to
-        let redirObj = {
-          'to': 'gamePlay',
-          'room': roomName
-        };
         // make new game object
         let p1 = i;
         let p2 = socket.id;
         let gameName = p1 + p2;
-        let thisgame = new Game(p1, p2, gameName);
+        let thisgame = new Game(liveUsers[p1], liveUsers[p2], gameName);
         liveGames[gameName] = { ...thisgame };
+        // create redirection object to let client know where to redirect and what room to go to
+        let redirObj = {
+          'to': 'gamePlay',
+          'room': roomName,
+          'game': thisgame
+        };
+        
+        // calc length and then emit
         let gameArr = Object.keys(liveGames);
         gameCount = gameArr.length;
         io.emit('x0_Live_Games', gameCount)
@@ -195,6 +188,11 @@ io.on("connection", (socket) => {
       }
     }
     io.to(socket.id).emit('x0_Game_Redirect', {'to':'userLeftPage'})
+  })
+
+  socket.on('clientMoveMade', (msg)=>{
+    console.log('game move made');
+    io.to(msg.game.gameRoom).emit('x0_Game_Move', msg);
   })
 
 });
