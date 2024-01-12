@@ -133,18 +133,18 @@ const moveMade = (coord, symb) => {
 socket.on('x0_Game_Move', (msg) => {
     console.log('someone made a move', msg);
     thisGame = msg.game;
-    if(thisGame.lastTurn.sym == thisGame.oPlayerID){
-        moveMade(thisGame.lastTurn.pos,'O');
-    } else if(thisGame.lastTurn.sym == thisGame.xPlayerID){
-        moveMade(thisGame.lastTurn.pos,'X');
+    if (thisGame.lastTurn.sym == thisGame.oPlayerID) {
+        moveMade(thisGame.lastTurn.pos, 'O');
+    } else if (thisGame.lastTurn.sym == thisGame.xPlayerID) {
+        moveMade(thisGame.lastTurn.pos, 'X');
     };
 });
 
 // game winner
 
-socket.on('x0_Game_Won', (msg)=>{
+socket.on('x0_Game_Won', (msg) => {
     console.log('winner');
-    showScreen('winnerPage',()=>{
+    showScreen('winnerPage', () => {
         document.getElementById('winnerSymbol').textContent = msg.sym;
         document.getElementById('winnerName').textContent = msg.username;
     });
@@ -157,16 +157,20 @@ socket.on('x0_Game_Won', (msg)=>{
 const gameClickHandle = (pos) => {
     if (thisGame.whosTurn == socket.id) {
         let coord = pos.split('')
-        thisGame.gameField[coord[1]][coord[0]] = thisSymbol;
-        thisGame.lastTurn.pos = pos
-        if (thisSymbol == 'X') {
-            thisGame.whosTurn = thisGame.oPlayerID;
-            thisGame.lastTurn.sym = thisGame.xPlayerID;
+        if (thisGame.gameField[coord[1]][coord[0]] == '') {
+            thisGame.gameField[coord[1]][coord[0]] = thisSymbol;
+            thisGame.lastTurn.pos = pos
+            if (thisSymbol == 'X') {
+                thisGame.whosTurn = thisGame.oPlayerID;
+                thisGame.lastTurn.sym = thisGame.xPlayerID;
+            } else {
+                thisGame.whosTurn = thisGame.xPlayerID;
+                thisGame.lastTurn.sym = thisGame.oPlayerID;
+            }
+            socket.emit('clientMoveMade', { 'status': 'Live', 'game': thisGame });
         } else {
-            thisGame.whosTurn = thisGame.xPlayerID;
-            thisGame.lastTurn.sym = thisGame.oPlayerID;
+            window.alert('Symbol already here')
         }
-        socket.emit('clientMoveMade', { 'status': 'Live', 'game': thisGame });
 
     } else {
         window.alert('Not Your Turn');
