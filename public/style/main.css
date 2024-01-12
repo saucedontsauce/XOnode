@@ -45,7 +45,16 @@ html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative
+    position: relative;
+    background: rgb(9,9,121);
+    background: linear-gradient(16deg, rgba(9,9,121,1) 4%, rgba(9,9,121,1) 43%, rgba(38,35,194,1) 100%);
+    color: white;
+}
+.dispBack {
+    background: #4ADEDE;
+    min-width: 320px;
+    max-width: 600px;
+    border-radius: 6px;
 }
 
 .infoDisp {
@@ -85,7 +94,11 @@ html {
 
 .menuBtn {
     cursor: pointer;
-    padding: .75rem 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10%;
+    width: 100%;
 }
 
 .menuBtn:hover {
@@ -104,17 +117,30 @@ html {
     top: 2px;
     left: 2px
 }
-
+.optionsWrap {
+    height: calc(100dvh - 60px);
+    position: relative;
+}
+.optionsWrap h4 {
+    padding: 1rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 .optionsDisplay {
-    height: calc(100dvh - 82px);
+    padding-top: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
 }
 
+
 .settingSubmitBtn {
-    width: 30dvw;
+    cursor: pointer;
+    width: 100%;
+    padding: 1rem;
 }
 
 .searchSpinn {
@@ -125,7 +151,7 @@ html {
 }
 
 .gamePlayView {
-    height: calc(100dvh - 30px);
+    padding: 1rem;
 }
 
 .whoami {
@@ -179,3 +205,20 @@ html {
     justify-content: space-evenly;
     align-items: center;
 }
+
+.winnerSymb {
+    font-size: 50px;
+}
+.winnerUsername {
+    font-size: 25px;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+  }

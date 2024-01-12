@@ -23,23 +23,26 @@
         <section id="serverStats">
             <div class="infoDisp">
 
-                <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
+                <div class="infoGroup centerflex noselect">Users Connected: <div class="numDisp inline userCount noselect" id="userCount">
                         0</div>
                 </div>
-                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0
+                <div class="infoGroup centerflex noselect">Games Live: <div class="numDisp inline gameCount noselect" id="gameCount">0
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="gameTitle">
-            <h3>Tic-Tac-Toe</h3>
-        </section>
+        <div class="dispBack">
+            <section class="gameTitle">
+                <h3 class="noselect">Tic-Tac-Toe</h3>
+            </section>
 
-        <section class="gameMenu">
-            <div class="menuBtn" onclick="showScreen('searchMenu', startSearch)">Start</div>
-            <div class="menuBtn" onclick="showScreen('optionsMenu')">Options</div>
-        </section>
+            <section class="gameMenu">
+                <div class="menuBtn" onclick="showScreen('searchMenu', startSearch)">Start</div>
+                <div class="menuBtn" onclick="showScreen('optionsMenu')">Options</div>
+            </section>
+        </div>
+
     </div>
 
 
@@ -51,34 +54,40 @@
         <section id="serverStats">
             <div class="infoDisp">
 
-                <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
+                <div class="infoGroup centerflex noselect">Users Connected: <div class="numDisp inline userCount noselect" id="userCount">
                         0</div>
                 </div>
-                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0
+                <div class="infoGroup centerflex noselect">Games Live: <div class="numDisp inline gameCount noselect" id="gameCount">0
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="backBtnWrap">
-            <div onclick="showScreen('mainMenu')" class="backbtn">Back</div>
-        </section>
-        <h4>Options</h4>
-        <div class="optionsDisplay">
+        <div class="dispBack optionsWrap">
+            <section id="backBtnWrap">
+                <div onclick="showScreen('mainMenu')" class="backbtn">Back</div>
+            </section>
+            <h4>Options</h4>
             <p class="center">Settings saved here will be stored in locaLstorage, meaning you dont have to come back
                 here to change
                 things everytime you load the page.</p>
-            <div class="optionrow">
-                <label for="username">Username:</label>
-                <input type="text" name="username" id="usernameChange">
-            </div>
+            <div class="optionsDisplay">
+                <div class="optionrow">
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" id="usernameChange">
+                </div>
 
 
-            <div class="optionrow">
-                <input class="settingSubmitBtn" type="button" value="Okay" onclick="handleSettingsSave()">
+                <div class="optionrow">
+                    <div class="settingSubmitBtn" onclick="handleSettingsSave()">Okay</div>
+                </div>
+
             </div>
 
         </div>
+
+
+
     </div>
 
 
@@ -87,10 +96,10 @@
         <section id="serverStats">
             <div class="infoDisp">
 
-                <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
+                <div class="infoGroup centerflex noselect">Users Connected: <div class="numDisp inline userCount noselect" id="userCount">
                         0</div>
                 </div>
-                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0
+                <div class="infoGroup centerflex noselect">Games Live: <div class="numDisp inline gameCount noselect" id="gameCount">0
                     </div>
                 </div>
             </div>
@@ -115,32 +124,32 @@
         <section id="serverStats">
             <div class="infoDisp">
 
-                <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
+                <div class="infoGroup centerflex noselect">Users Connected: <div class="numDisp inline userCount" id="userCount">
                         0</div>
                 </div>
-                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0
+                <div class="infoGroup centerflex noselect">Games Live: <div class="numDisp inline gameCount" id="gameCount">0
                     </div>
                 </div>
             </div>
         </section>
-        <section class="gamePlayView">
-            <div class="whoami" id="whoAmI">Error</div>
+        <section class="gamePlayView dispBack">
+            <div class="whoami noselect" id="whoAmI">Error</div>
 
-            <div class="gamegrid" id="gameGrid">
+            <div class="gamegrid noselect" id="gameGrid">
                 <div class="gameRow" id="0">
-                    <div class="gameCell" id="00" onclick="gameClickHandle('00')"></div>
-                    <div class="gameCell" id="01" onclick="gameClickHandle('01')"></div>
-                    <div class="gameCell" id="02" onclick="gameClickHandle('02')"></div>
+                    <div class="gameCell noselect" id="00" onclick="gameClickHandle('00')"></div>
+                    <div class="gameCell noselect" id="01" onclick="gameClickHandle('01')"></div>
+                    <div class="gameCell noselect" id="02" onclick="gameClickHandle('02')"></div>
                 </div>
                 <div class="gameRow" id="1">
-                    <div class="gameCell" id="10" onclick="gameClickHandle('10')"></div>
-                    <div class="gameCell" id="11" onclick="gameClickHandle('11')"></div>
-                    <div class="gameCell" id="12" onclick="gameClickHandle('12')"></div>
+                    <div class="gameCell noselect" id="10" onclick="gameClickHandle('10')"></div>
+                    <div class="gameCell noselect" id="11" onclick="gameClickHandle('11')"></div>
+                    <div class="gameCell noselect" id="12" onclick="gameClickHandle('12')"></div>
                 </div>
                 <div class="gameRow" id="2">
-                    <div class="gameCell" id="20" onclick="gameClickHandle('20')"></div>
-                    <div class="gameCell" id="21" onclick="gameClickHandle('21')"></div>
-                    <div class="gameCell" id="22" onclick="gameClickHandle('22')"></div>
+                    <div class="gameCell noselect" id="20" onclick="gameClickHandle('20')"></div>
+                    <div class="gameCell noselect" id="21" onclick="gameClickHandle('21')"></div>
+                    <div class="gameCell noselect" id="22" onclick="gameClickHandle('22')"></div>
                 </div>
             </div>
             <div class="winnerbanner hidden" id="winnerBanner">
@@ -155,16 +164,16 @@
         <section id="serverStats">
             <div class="infoDisp">
 
-                <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
+                <div class="infoGroup centerflex noselect">Users Connected: <div class="numDisp inline userCount noselect" id="userCount">
                         0</div>
                 </div>
-                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0
+                <div class="infoGroup centerflex noselect">Games Live: <div class="numDisp inline gameCount noselect" id="gameCount">0
                     </div>
                 </div>
             </div>
         </section>
 
-        <div class="userLeftWrapper">
+        <div class="userLeftWrapper dispBack">
             <div class="userLeftBanner">Your opponent left the game</div>
             <div id="homeButton" onclick="showScreen('mainMenu')">
                 Home
@@ -178,15 +187,15 @@
         <section id="serverStats">
             <div class="infoDisp">
 
-                <div class="infoGroup centerflex">Users Connected: <div class="numDisp inline userCount" id="userCount">
+                <div class="infoGroup centerflex noselect">Users Connected: <div class="numDisp inline userCount noselect" id="userCount">
                         0</div>
                 </div>
-                <div class="infoGroup centerflex">Games Live: <div class="numDisp inline gameCount" id="gameCount">0
+                <div class="infoGroup centerflex noselect">Games Live: <div class="numDisp inline gameCount noselect" id="gameCount">0
                     </div>
                 </div>
             </div>
         </section>
-        <div class="winnerPageView">
+        <div class="winnerPageView dispBack">
             <h4>Winner!</h4>
             <div class="winnerSymb" id="winnerSymbol">
                 Error
