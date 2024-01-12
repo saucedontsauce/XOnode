@@ -137,13 +137,6 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on('gameState', (msg) => {
-    console.log(msg)
-  });
-
-
-
-
   // user wants to move rooms
   socket.on('moveRooms', (msg) => {
     socket.join(msg)
@@ -180,7 +173,8 @@ io.on("connection", (socket) => {
       let winnerSymbol = gameField[0][0];
       let winnerPackage = {
         sym: winnerSymbol,
-        username: '3rr0r'
+        room: msg.game.gameRoom
+
       };
       if (gameField[0][0] == 'X') {
         winnerPackage.username = msg.game.xPlayerName;
@@ -200,6 +194,7 @@ io.on("connection", (socket) => {
       let winnerSymbol = gameField[1][0];
       let winnerPackage = {
         sym: winnerSymbol,
+        room: msg.game.gameRoom
 
       };
       if (gameField[1][0] == 'X') {
@@ -220,6 +215,7 @@ io.on("connection", (socket) => {
       let winnerSymbol = gameField[2][0];
       let winnerPackage = {
         sym: winnerSymbol,
+        room: msg.game.gameRoom
 
       };
       if (gameField[2][0] == 'X') {
@@ -241,6 +237,7 @@ io.on("connection", (socket) => {
       let winnerSymbol = gameField[0][0];
       let winnerPackage = {
         sym: winnerSymbol,
+        room: msg.game.gameRoom
 
       };
       if (gameField[0][0] == 'X') {
@@ -262,6 +259,8 @@ io.on("connection", (socket) => {
       let winnerSymbol = gameField[0][1];
       let winnerPackage = {
         sym: winnerSymbol,
+        room: msg.game.gameRoom
+
       };
       if (gameField[0][1] == 'X') {
         winnerPackage.username = msg.game.xPlayerName;
@@ -281,6 +280,7 @@ io.on("connection", (socket) => {
       let winnerSymbol = gameField[0][2];
       let winnerPackage = {
         sym: winnerSymbol,
+        room: msg.game.gameRoom
       };
       if (gameField[0][2] == 'X') {
         winnerPackage.username = msg.game.xPlayerName;
@@ -300,6 +300,7 @@ io.on("connection", (socket) => {
       let winnerSymbol = gameField[1][1];
       let winnerPackage = {
         sym: winnerSymbol,
+        room: msg.game.gameRoom
       };
       if (gameField[1][1] == 'X') {
         winnerPackage.username = msg.game.xPlayerName;
@@ -319,7 +320,7 @@ io.on("connection", (socket) => {
       let winnerSymbol = gameField[1][1];
       let winnerPackage = {
         sym: winnerSymbol,
-        username: undefined
+        room: msg.game.gameRoom
       };
       if (gameField[1][1] == 'X') {
         winnerPackage.username = msg.game.xPlayerName;
@@ -338,6 +339,12 @@ io.on("connection", (socket) => {
     }
 
   });
+
+  socket.on('silentLeave', (msg)=>{
+    console.log('room leave requested', msg);
+    socket.leave(msg);
+  })
+
 
 
 });

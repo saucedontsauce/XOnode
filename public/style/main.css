@@ -164,8 +164,16 @@ html {
     font-size: 50px;
 }
 
-.userLeftPage {
-    height: calc(70dvh - 30px);
+.userLeftWrapper {
+    height: calc(100dvh - 30px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.winnerPageView {
+    height: calc(100dvh - 30px);
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;

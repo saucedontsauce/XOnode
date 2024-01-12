@@ -12,7 +12,8 @@ multiplayer tic tac toe game using websockets to communicate between players
  
 
  - styling will be one of the last things to be done as functionalit is going to be the main focus
-### done
+## done
+### screen controller
 script to select which screen is visible
 cycles throught gameView class objects and makes them invisible then makes sure the target is visible
 showscreen function now accepts a callback function making general use easier due to using display none
@@ -57,7 +58,7 @@ game is removed from livegames and all users are updated on the count
 clients redirect to winnerpage and display winners info with button to home screen
 
 
- ### needs fixing/doing
+## needs fixing/doing
 fix css for options
 fix css for playerleft
 fix css for winnerpage

@@ -148,6 +148,8 @@ socket.on('x0_Game_Won', (msg)=>{
         document.getElementById('winnerSymbol').textContent = msg.sym;
         document.getElementById('winnerName').textContent = msg.username;
     });
+    socket.emit('silentLeave', thisGame.gameRoom);
+    thisGame = undefined;
 });
 
 
