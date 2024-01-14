@@ -74,10 +74,13 @@ socket.on('x0_Live_Games', (msg) => {
 socket.on("x0_Game_Redirect", (msg) => {
     let redirConits = msg
     showScreen(`${redirConits.to}`)
-    resizegrid()
-    console.log(msg)
-
+    resizegrid();
+    console.log(msg);
     thisGame = msg.game;
+    let cellList = documents.getElementsByClassName('gameCell');
+    for(let i = 0; i<cellList.length;i++){
+        cellList[i].textContent = '';
+    }
     if (redirConits.game) {
         if (redirConits.game.xPlayerID == socket.id) {
             thisSymbol = 'X'
