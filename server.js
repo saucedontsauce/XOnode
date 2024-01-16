@@ -31,6 +31,11 @@ app.get('/refresh', (req, res) => {
       res.send({'message':"error"});
     } else {
       res.send({'message':'git pull SUCCESSFUL'})
+      exec('sudo reboot', (error, stdout, stderr) => {
+        if(error){
+          console.error(error);
+        }
+      })
     }   
   })
 })
