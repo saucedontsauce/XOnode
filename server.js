@@ -29,12 +29,7 @@ app.get('/refresh', (req, res) => {
     if(error){
       console.error(`exec error: ${error}`);
       res.status(500).send();
-    } else {
-      exec('sudo reboot', (error)=>{
-        console.error(error);
-      })
-    }
-    
+    }     
   })
 
 
