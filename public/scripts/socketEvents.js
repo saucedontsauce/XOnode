@@ -77,7 +77,7 @@ socket.on("x0_Game_Redirect", (msg) => {
     resizegrid();
     console.log(msg);
     thisGame = msg.game;
-    let cellList = documents.getElementsByClassName('gameCell');
+    let cellList = document.getElementsByClassName('gameCell');
     for(let i = 0; i<cellList.length;i++){
         cellList[i].textContent = '';
     }
