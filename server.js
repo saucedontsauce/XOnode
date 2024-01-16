@@ -24,13 +24,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/index.html'));
 });
 
-app.get('/refresh', (req, res) => {
+app.post('/refresh', (req) => {
   exec('git pull https://github.com/saucedontsauce/XOnode', (error, stdout, stderr) => {
     if(error){
       console.error(`exec error: ${error}`);
-      res.send({'message':"error"});
     } else {
-      res.send({'message':'git pull SUCCESSFUL'})
       exec('sudo reboot', (error, stdout, stderr) => {
         if(error){
           console.error(error);
