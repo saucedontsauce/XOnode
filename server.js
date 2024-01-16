@@ -1,3 +1,6 @@
+// main server ( really needs cleaning and rearranging, go big or go bitching.. )
+const { exec } = require('child_process');
+
 const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
@@ -17,10 +20,28 @@ let searchingUsers = {};
 
 app.use('/public', express.static(path.join(__dirname, '/public')))
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/index.html'));
 });
 
+app.get('/refresh', (req, res) => {
+  exec('git pull https://github.com/saucedontsauce/XOnode', (error, stdout, stderr) => {
+    if(error){
+      console.error(`exec error: ${error}`);
+      res.status(500).send();
+    } else {
+      exec('sudo reboot', (error)=>{
+        console.error(error);
+      })
+    }
+    
+  })
+
+
+
+
+  res.status(200).send();
+})
 
 app.get("/api", (req, res) => {
   res.status(200).send({
