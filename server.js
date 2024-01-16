@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 app.post('/refresh', (req) => {
   exec('git pull https://github.com/saucedontsauce/XOnode', (error, stdout, stderr) => {
     if(error){
-      console.error(`exec error: ${error}`);
+      console.error(`git pull error: ${error}`);
     } else {
       exec('sudo reboot', (error, stdout, stderr) => {
         if(error){
