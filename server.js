@@ -28,14 +28,11 @@ app.get('/refresh', (req, res) => {
   exec('git pull https://github.com/saucedontsauce/XOnode', (error, stdout, stderr) => {
     if(error){
       console.error(`exec error: ${error}`);
-      res.status(500).send();
-    }     
+      res.send({'message':"error"});
+    } else {
+      res.send({'message':'git pull SUCCESSFUL'})
+    }   
   })
-
-
-
-
-  res.status(200).send();
 })
 
 app.get("/api", (req, res) => {
