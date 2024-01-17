@@ -1,29 +1,77 @@
-// main server ( really needs cleaning and rearranging, go big or go bitching.. )
-const { exec } = require('child_process');
+// main server ( really needs cleaning and rearranging, go big or go bitching.. );
 
-const express = require("express");
-const { createServer } = require("http");
-const { Server } = require("socket.io");
-const path = require('path');
+/*
+
+multiplayer games that appeal to nostalgia and simplicity 
 
 
+- all managed by a single node application
+- best way for real time data transfer is socket.io, with it all being on one server it will be really useful as no weird port/routing shit needs to be done.
 
 
-let app = express();
+
+
+----- eventually have auth0 setup and have connection to a database to store player stats but wont be needed until at least 3 games are added
+
+
+- make a default landing page that links to a page with nav, just use app.get('route', path.join(__dirname,'filename'));
+
+
+
+
+
+
+- dont just skeleton the css and make it look nice
+- make a few classes that can be reused many times
+
+
+- work on 'modulization' split it up a bit.
+
+
+
+*/
+
+// port variable 
 const port = 3000;
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
+// game variables 
 let liveUsers = {};
 let liveGames = {};
 let searchingUsers = {};
 
-app.use('/public', express.static(path.join(__dirname, '/public')))
 
+// imports
+// built in node thing that allows to run console commands from within the script
+const { exec } = require('child_process');
+// express import
+const express = require("express");
+// createServer from http module , a bit obvious what its for
+const { createServer } = require("http");
+// sexy import to create a socket.io server
+const { Server } = require("socket.io");
+// imports path, allows easier path handling
+const path = require('path');
+
+
+// initialize express application
+let app = express();
+
+// config for express app
+// set up as an api using text/json
+app.use(express.json());
+// work out what actually does, breaks without lmao
+app.use(express.urlencoded({ extended: true }));
+// monitoring start
+app.use(require('express-status-monitor')());
+
+// serving starts
+// static serve files
+app.use('/public', express.static(path.join(__dirname, '/public')));
+// main website index page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/index.html'));
 });
-
+// wip for webhook, at least thats what i think its called
 app.post('/refresh', (req) => {
   exec('git pull https://github.com/saucedontsauce/XOnode', (error, stdout, stderr) => {
     if(error){
@@ -37,7 +85,7 @@ app.post('/refresh', (req) => {
     }   
   })
 })
-
+// root for some form of api in the future
 app.get("/api", (req, res) => {
   res.status(200).send({
     success: true,
@@ -45,8 +93,11 @@ app.get("/api", (req, res) => {
   });
 });
 
+
+//  create http server using the express app
 const httpServer = createServer(app);
 
+// create a websocket server using the http server
 const io = new Server(httpServer, {
   cors: {
     origin: "*",
@@ -55,7 +106,7 @@ const io = new Server(httpServer, {
 });
 
 
-
+// game mess starts 
 class Game {
   constructor(p1, p2, room) {
     console.log(p1);
